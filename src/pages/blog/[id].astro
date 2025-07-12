@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from "astro:content"
+import Layout from "../../layouts/Layout.astro"
+import ExternalLink from "../../components/ExternalLink.astro"
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog")
+    return posts.map((post) => ({
+        params: { id: post.id },
+        props: { post },
+    }))      
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+
+const date = post.data.date.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+})
+---
+
+<Layout title={post.data.title} canonical={`/blog/${post.id}`}>
+    <div class="content">
+        <span class="text-gray-500 dark:text-neutral-400">
+            {date}
+        </span>
+        <h1 class="mt-2">{post.data.title}</h1>
+        <Content components={{ a: ExternalLink }}/>
+    </div>
+    <div class="mt-10">
+        <a href={`/`} class="text-gray-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+            Back to all posts
+        </a>
+    </div>
+</Layout>

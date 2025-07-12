@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+const posts = (await getCollection("blog")).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout>
+	<h1 class="text-xl dark:text-white">514sid</h1>
+	<p class="text-lg text-neutral-600 dark:text-neutral-300 transition-colors">
+		Writing about digital signage, development, and whatever else is worth
+		thinking about
+	</p>
+	<div class="flex gap-4 mt-4">
+		<a href="https://github.com/514sid" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+			GitHub
+		</a>
+		<a href="https://reddit.com/user/514sid" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+			Reddit
+		</a>
+		<a href="https://x.com/whois514" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+			X
+		</a>
+	</div>
+	<div class="grid grid-cols-1 gap-4 mt-10 text-lg">
+		{
+			posts.map((post) => (
+				<a
+					href={`/blog/${post.id}`}
+					class="flex gap-5 items-center group"
+				>
+					<span class="text-neutral-400 dark:text-neutral-400 w-24 flex-shrink-0 font-mono text-base">
+						{post.data.date.toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit'
+						})}
+					</span>
+					<span class="text-neutral-700 dark:text-neutral-200 group-hover:text-black dark:group-hover:text-white transition-colors">
+						{post.data.title}
+					</span>
+				</a>
+			))
+		}
+	</div>
+</Layout>
