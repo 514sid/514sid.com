@@ -9,10 +9,15 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout>
 	<h1 class="text-xl dark:text-white">514sid</h1>
-	<p class="text-lg text-neutral-600 dark:text-neutral-300 transition-colors">
-		Writing about digital signage, development, and whatever else is worth
-		thinking about
-	</p>
+	<div class="flex flex-col gap-4 mt-4">
+		<p class="text-lg text-neutral-600 dark:text-neutral-300 transition-colors">
+			Writing about digital signage, development, and whatever else is worth
+			thinking about
+		</p>
+		<p class="text-lg text-neutral-600 dark:text-neutral-300 transition-colors">
+			I’m building <a href="https://github.com/screenlite/screenlite" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">Screenlite</a>, an open-source digital signage software, and <a href="https://signagelist.org" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">SignageList</a>, the most comprehensive directory of digital signage software
+		</p>
+	</div>
 	<div class="flex gap-4 mt-4">
 		<a href="https://github.com/514sid" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
 			GitHub
