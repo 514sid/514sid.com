@@ -4,11 +4,11 @@ import ThemeIcon from "../components/ThemeIcon.astro";
 import SEO from "../components/SEO.astro";
 
 export interface Props {
-	title?: string
-	canonical?: string
+	title?: string;
+	canonical?: string;
 }
 
-const { title, canonical } = Astro.props
+const { title, canonical } = Astro.props;
 ---
 
 <html lang="en">
@@ -19,16 +19,39 @@ const { title, canonical } = Astro.props
 		<meta name="generator" content={Astro.generator} />
 		<SEO title={title} canonical={canonical} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<script is:inline>
+			const theme = (() => {
+				const localStorageTheme = localStorage?.getItem('theme') ?? ''
+				if (['dark', 'light'].includes(localStorageTheme)) {
+					return localStorageTheme
+				}
+				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					return 'dark'
+				}
+				return 'light'
+			})()
+
+			document.documentElement.classList.toggle('dark', theme === 'dark')
+
+			window.localStorage.setItem('theme', theme)
+		</script>
 	</head>
-	<body class="max-w-prose mx-auto bg-[#FAFAFA] dark:bg-[#121212] transition-colors px-5 lg:px-0">
+	<body
+		class="max-w-prose mx-auto bg-[#FAFAFA] dark:bg-[#121212] transition-colors px-5 lg:px-0"
+	>
 		<div class="flex justify-between items-center py-4">
-			{!Astro.url.pathname || Astro.url.pathname === '/' ? (
-				<div></div>
-			) : (
-				<a href="/" class="text-gray-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
-					Home
-				</a>
-			)}
+			{
+				!Astro.url.pathname || Astro.url.pathname === "/" ? (
+					<div />
+				) : (
+					<a
+						href="/"
+						class="text-gray-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+					>
+						Home
+					</a>
+				)
+			}
 			<ThemeIcon />
 		</div>
 		<div class="my-20 mb-40">
