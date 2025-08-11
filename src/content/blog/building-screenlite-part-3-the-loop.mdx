@@ -1,0 +1,52 @@
+---
+title: Building Screenlite. Part 3 – The Player Loop
+date: 2025-08-11
+---
+
+For the Screenlite players, I'm designing the runtime around a loop. Not just a playlist cycling through content, but a real runtime loop — similar to how game engines work.
+
+Most existing signage players are event-driven or promise-chained: fetch content, render, then wait. It works, but it's easy to lose track of what's happening when. Async logic spreads out across different parts of the codebase. Bugs creep in when one step fails or doesn't resolve properly.
+
+In contrast, a loop gives structure. Every tick, the player runs a fixed sequence:
+
+1. Load the latest state
+2. Evaluate context-based rules
+3. Decide what to show
+4. Render to screen
+5. Wait for the next tick
+
+This pattern gives us a predictable, single point of control. The loop owns the player's behavior.
+
+Here's a simple example of what the main loop might look like:
+
+```typescript
+const sleep = (ms: number) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const mainLoop = async () => {
+    while (true) {
+        const now = Date.now()
+        
+        if (now - state.lastFetch > 5000) {
+            await fetchContent()
+        }
+
+        if (state.content) {
+            render(state.content)
+        }
+
+        await sleep(1000)
+    }
+}
+
+mainLoop()
+```
+
+It also makes the player more resilient. If something breaks — like a failed content load or a missing network connection — the loop just keeps going. The player can recover on the next tick without freezing or requiring a restart.
+
+Long operations like network fetches run separately in the background and update shared state. The loop reads that state on each cycle. This avoids blocking and keeps everything deterministic.
+
+Another bonus: this architecture makes it easier to test. I can simulate loop ticks in a test environment, feed in state, and snapshot what the player would render. That helps catch layout bugs or scheduling edge cases before they hit real screens.
+
+In short: the loop gives structure, predictability, and resilience. It's simple to reason about, easy to extend, and fits well with how Screenlite is being built: simple, modular, and open.
