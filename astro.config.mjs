@@ -6,11 +6,13 @@ import sitemap from '@astrojs/sitemap'
 
 import mdx from '@astrojs/mdx'
 
+import react from '@astrojs/react'
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://514sid.com',
 	vite: {
 		plugins: [tailwindcss()],
 	},
-	integrations: [sitemap(), mdx()],
+	integrations: [sitemap(), mdx(), react()],
 })
