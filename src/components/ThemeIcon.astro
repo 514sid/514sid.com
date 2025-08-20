@@ -2,7 +2,14 @@
 
 ---
 
-<button id="themeToggle" class="cursor-pointer relative w-[28px] h-[28px]">
+<button
+    id="themeToggle"
+    class="cursor-pointer relative w-[28px] h-[28px]"
+    aria-label="Toggle dark mode"
+    aria-pressed="false"
+    role="switch"
+    title="Toggle dark mode"
+>
     <svg
         class="sun absolute top-0 left-0 opacity-0 dark:opacity-100 dark:block text-gray-300 transition-opacity"
         xmlns="http://www.w3.org/2000/svg"
@@ -35,11 +42,33 @@
 <script is:inline>
     const handleToggleClick = () => {
         const element = document.documentElement;
+        const button = document.getElementById("themeToggle");
+
         element.classList.toggle("dark");
 
         const isDark = element.classList.contains("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
+
+        if (button) {
+            button.setAttribute("aria-pressed", isDark.toString());
+            button.setAttribute(
+                "aria-label",
+                `Toggle ${isDark ? "light" : "dark"} mode`,
+            );
+        }
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("themeToggle");
+        if (button) {
+            const isDark = document.documentElement.classList.contains("dark");
+            button.setAttribute("aria-pressed", isDark.toString());
+            button.setAttribute(
+                "aria-label",
+                `Toggle ${isDark ? "light" : "dark"} mode`,
+            );
+        }
+    });
 
     document
         .getElementById("themeToggle")
