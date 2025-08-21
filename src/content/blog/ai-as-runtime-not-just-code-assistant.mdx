@@ -1,0 +1,78 @@
+---
+title: AI as runtime, not just code assistant
+date: 2025-08-21
+---
+
+Lately I've been thinking about how we're using AI in software development, and honestly, I think we're heading in the wrong direction.
+
+Right now, the trend is all about using AI to help programmers write code faster. It fills in functions, generates endpoints, writes boilerplate. It's like a really smart assistant that lives in your IDE.
+
+And sure, that's useful. But the more I think about it, the more it feels like we're using something new to just speed up the old process.
+
+We're still building software the same way. We're writing lines of code, deploying it, wiring it all together. We're just asking AI to help with that. But what if AI could skip that step entirely? What if AI didn't help you write code, but just was the system?
+
+## From writing code to describing behavior
+
+There's an idea I keep coming back to: almost all programming comes down to input, processing, and output. Something happens, we do something with it, and then respond in some way.
+
+Right now, we're using AI to generate code that handles that cycle. But what if we didn't need to generate anything?
+
+What if we just gave the AI instructions like this:
+
+"When someone uploads a file, check if they're authenticated. If they are, store the file in S3 and return the URL. If not, return a 403 error."
+
+That's not code. That's behavior. And instead of asking the AI to translate it into Node.js or Python, we let the AI itself understand and execute it directly.
+
+In this model, I'm not writing code. I'm describing what should happen when something occurs. The AI becomes the thing that handles those events in real time.
+
+## The AI is the backend
+
+Imagine this in practice. You don't spin up a backend server anymore. You don't define routes or write controller logic. You don't need to deploy anything.
+
+You just describe what should happen, and the AI listens for requests and acts based on those instructions.
+
+Your traffic could hit an Nginx server that forwards everything to a single AI endpoint. The AI sees the request, figures out what it means, checks your instructions, and carries out the behavior. That could be storing data, validating input, or calling another service.
+
+It's not about writing server code anymore. It's about giving the AI the ability to handle input directly.
+
+## Moving beyond programming languages and optimizations
+
+Another big change here is that we won't need to think about programming languages or low-level optimizations. Those details become invisible, handled automatically by the AI runtime.
+
+This shift brings us closer to the business logic — to what the system is actually trying to accomplish. It's very much aligned with ideas from Domain-Driven Design, where the focus is on modeling real-world problems and behaviors, not on the technical details.
+
+As a result, we'll likely see more architects and domain experts who understand business logic and system design deeply, and fewer people focused solely on writing code. The craft of software development will evolve from "coding" to "orchestrating behavior" and "defining intent".
+
+## This won't replace real programming
+
+I want to be clear here: I don't think this replaces traditional programming. There will always be situations where writing code directly is the right choice. When you need precision, performance, or full control.
+
+This isn't a replacement. It's just another option.
+
+Just like we choose between SQL and NoSQL depending on the problem, or between containers and serverless, we'll choose between writing traditional code or using AI as a kind of intelligent runtime.
+
+Both approaches will have their pros and cons. There will be use cases where AI-driven behavior is too fuzzy, too unpredictable, or too limited. But there will also be plenty of cases where it makes everything faster and simpler.
+
+## Why I think this future is possible
+
+The pieces are already here. AI models today can:
+
+- Parse structured data
+- Call APIs
+- Understand logic
+- Maintain memory across interactions
+- Translate natural language into structured actions
+
+Right now, we use these models to generate text output — code that we then copy and paste. But we could let the AI do the thing directly, instead of telling us how to do it.
+
+The key shift here is that you wouldn't give the AI instructions for what code to write. You'd give it instructions for what to do when something happens. And that maps perfectly to how systems work. Events come in, something happens, and a result goes out.
+
+## Final thoughts
+
+I don't believe in a future where AI replaces developers or makes coding obsolete. I still enjoy writing code, and I don't plan to stop.
+
+But I do believe in a future where AI isn't just helping us write traditional applications. It's offering a new way to build them. A way where we don't need to always translate ideas into code, but can describe behavior directly and let the system handle it.
+
+And when that happens, the question will shift. Instead of asking "what code should I write for this?" we'll ask, "what should happen when this event occurs?".
+
+And when you can answer that clearly, maybe the AI doesn't need to write any code at all. Maybe it just runs.
