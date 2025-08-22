@@ -1,0 +1,76 @@
+---
+title: Why twice the nits doesn't look twice as bright  
+date: 2025-08-22
+---
+
+When you're shopping for a TV, one of the specs that often gets highlighted is the peak brightness — measured in nits. You might see a TV advertising 1,000 nits compared to another with 500 nits, and naturally assume the brighter one looks twice as bright.
+
+But that's not how human vision works.
+
+## What are nits anyway?
+
+"Nits" is just a simpler way of saying candela per square meter (cd/m²), the ISO-standard unit of luminance. It measures how much light a display emits per unit area. So a screen with 500 nits emits 500 candelas per square meter.
+
+This concept applies not just to TVs, but also to smartphones, laptops, computer monitors, tablets — all screens use nits (cd/m²) to describe brightness.
+
+It's a physical measurement, and it's precise.
+
+## Our eyes don't see brightness linearly
+
+Even though nits give us a precise, physical measurement of brightness, the way we see that brightness is far less straightforward.
+
+Human vision doesn't respond to light in a simple, linear fashion. In other words, if a display doubles its light output, it doesn't look twice as bright to us.
+
+Our eyes are more sensitive to changes in darker scenes and less responsive as things get brighter — a quirk of perception that follows a logarithmic or power curve.
+
+This phenomenon is described by the Weber–Fechner law, which states that perceived brightness $ V $ is proportional to the logarithm of the actual luminance $ L $. In practice, especially in display technology, this is often modeled using a gamma function:
+
+$$
+V = L^\gamma
+$$
+
+where $ \gamma $ is typically around 0.5 when encoding perceived brightness.
+
+Let's put some numbers to it.
+
+In a linear model:
+
+- 500 nits = 500 units of perceived brightness  
+- 1,000 nits = 1,000 units (exactly double)
+
+But in a gamma-based model with $ \gamma = 0.5 $:
+
+$$
+500^\gamma = \sqrt{500} \approx 22.36
+$$
+
+$$
+1000^\gamma = \sqrt{1000} \approx 31.62
+$$
+
+So even though the physical luminance doubled, the perceived brightness only increased from about 22 to 32 — that's roughly a 41% increase, not 100%.
+
+This is why a screen that peaks at 1,000 nits won't look twice as bright as one with 500 nits. It'll look brighter, yes — but the jump will feel smaller than the raw numbers suggest. So while nit values matter, they don't always tell the whole story of how bright something looks to the human eye.
+
+## Ambient light, visibility, and vibrancy
+
+How bright your screen needs to be really depends on the light around you. It's not just about whether you can see what's on the screen. Ambient light also changes how vibrant and crisp the picture looks.
+
+Think about it. In a dim room, even a moderately bright screen can look rich and full of life. But step into a bright room or near a sunny window and that same screen might suddenly look washed out. Blacks lose their depth and colors do not appear as vibrant as they should.
+
+That's because your eyes adjust to the overall brightness of the environment, making it harder to see contrast between light and dark on the screen.
+
+So, what does this mean in practice? Here's a rough guide:
+
+- **Indoors, in dim or moderately lit rooms**  
+  A screen with 300 to 500 nits will usually do the job well, providing clear visibility and good contrast without requiring excessive brightness.
+
+- **Bright rooms or near windows**  
+  You'll want something closer to 800 to 1000 nits to fight off glare and keep the image looking sharp.
+
+- **Direct sunlight**  
+  If you're using a screen outdoors where the sun hits directly, like public displays or digital signs, you need specialized outdoor screens that can hit 3000 nits or more, sometimes even exceeding 10,000 nits to stay visible.
+
+Because how punchy and lifelike an image looks depends on how much brighter the screen is compared to its surroundings, it's not just about the nit number itself.
+
+For this reason, many modern devices include ambient light sensors that automatically adjust screen brightness, ensuring an optimal balance between visibility, color accuracy, and battery life regardless of the environment.
