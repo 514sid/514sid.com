@@ -18,6 +18,8 @@
     "astro": "^5.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
