@@ -1,0 +1,25 @@
+---
+title: Building Screenlite. Part 5 – The first step on Android
+date: 2025-09-08
+---
+When I first started Screenlite, I knew Android would eventually become a key part of it. TVs, media boxes, tablets, commercial displays — most of them run some flavor of Android. If you want to reach real-world screens without special hardware, Android is unavoidable.
+
+Still, I didn't want to begin there. My early focus was on the CMS itself and the broader architecture. But now, after a few months of groundwork, it felt like the right time to take the first step into Android development.
+
+That step is a small app called Screenlite Web Kiosk.
+
+It's not the full player yet. Think of it as a focused tool: a fullscreen browser with kiosk-like behavior. It launches automatically on boot, hides system UI, prevents the device from sleeping, and retries when the network fails. It also adapts to rotation and has a TV-friendly interface.
+
+At first glance, it might look like just a side project — but it's not. This app is both practical and strategic. Practical because even in its current form, it solves a real problem: displaying a webpage reliably on Android hardware, without subscriptions or ads. Strategic because it lets me test features and patterns that will later be reused in the full Screenlite player.
+
+I see it as building the foundation in public. Instead of disappearing for months and resurfacing with a complex Android app, I wanted to release something early, let people try it, and collect feedback. Lightweight use cases — dashboards, menus, schedules, or even web apps running fullscreen — can already be handled by this kiosk browser. For some users, it might even be all they need.
+
+For me, this release is also a reality check. Android development comes with its own set of quirks: lifecycle events, background restrictions, UI scaling across devices, and more. By tackling these challenges in a smaller app, I can refine solutions before they scale up into the larger project.
+
+This is only the beginning, but beginnings matter. Screenlite Web Kiosk is not the final player, but it is the first Android milestone. And I plan to keep supporting it as a lightweight option even after the full player arrives.
+
+If you'd like to try it, the APK is available under [Releases on GitHub](https://github.com/screenlite/web-kiosk). Install it on a TV, tablet, or box, and you'll have a simple fullscreen browser that just works.
+
+As always, I'd love to hear your feedback. Every bug report, feature request, or small note helps shape the direction forward.
+
+This project is a long road — but each step, even the small ones, adds up.
