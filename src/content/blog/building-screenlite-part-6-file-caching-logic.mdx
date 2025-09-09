@@ -1,0 +1,137 @@
+---
+title: Building Screenlite. Part 6 – File caching logic
+date: 2025-09-09
+---
+When a digital signage player runs, one of its biggest responsibilities is making sure the right files are available locally. If the device loses network, it must still keep showing the latest schedule. That means caching is not just an optimization — it's core to reliability.
+
+I've been designing a caching flow that is simple, deterministic, and fits into the player's main loop. Instead of scattering downloads and cleanups across callbacks, the cache manager works as a per-file state machine. Each file knows exactly where it is in its lifecycle, and the player can make decisions based on those states.
+
+## File states
+
+The cache manager tracks all known files, and each file has exactly one state:  
+
+- `Missing` — required by the schedule but not yet downloaded.  
+- `In Progress` — download is running.  
+- `Downloaded` — fully cached and verified, safe to use.  
+- `Obsolete` — no longer required, waiting for cleanup.  
+
+## Example: Simple update
+
+Initial state:  
+```
+Files:
+- A: Downloaded
+- B: Downloaded
+
+Required files: [A, B]  
+```
+New schedule arrives: `[B, C, D]`.  
+
+### 1. Update required  
+- A → no longer required → transition to `Obsolete`  
+- B → still required → keep `Downloaded`  
+- C → Missing  
+- D → Missing  
+
+Files after update:
+```
+- A: Obsolete  
+- B: Downloaded  
+- C: Missing  
+- D: Missing  
+```
+### 2. Transition  
+
+Start downloads:
+```
+- A: Obsolete  
+- B: Downloaded
+- C: In Progress  
+- D: In Progress  
+```
+### 3. Commit  
+After successful downloads:
+```
+- A: Obsolete  
+- B: Downloaded
+- C: Downloaded  
+- D: Downloaded  
+```
+
+At this point, `[B, C, D]` are fully ready. The player can switch to the new schedule safely.  
+
+### 4. Cleanup  
+Remove obsolete `A`.  
+
+Final state:  
+```
+Files:
+- B: Downloaded
+- C: Downloaded
+- D: Downloaded
+
+Required files: [B, C, D]  
+```
+
+## Example: New schedule arrives mid-download
+
+Initial state:  
+```
+Files:
+- A: Downloaded  
+- B: Downloaded  
+- C: In Progress (40% done)  
+
+Required files: [A, B, C]  
+```
+A new schedule arrives: `[B, D]`.  
+
+### 1. Update required  
+- A → no longer required → `Obsolete`  
+- B → still required → keep `Downloaded`  
+- C → no longer required → `Obsolete` (download cancelled)  
+- D → `Missing`
+
+Files after update:
+```
+- A: Obsolete  
+- B: Downloaded  
+- C: Obsolete
+- D: Missing  
+```
+
+### 2. Transition  
+Start download for `D`:  
+```
+- A: Obsolete  
+- B: Downloaded
+- C: Obsolete
+- D: In Progress  
+```
+
+### 3. Commit + cleanup  
+When `D` finishes:
+```
+- A: Obsolete  
+- B: Downloaded
+- C: Obsolete
+- D: Downloaded  
+```
+Remove obsolete files `A` and `C`.  
+
+Final state:
+```
+Files:
+- B: Downloaded 
+- D: Downloaded
+
+Required files: [B, D]  
+```
+The system never enters an inconsistent state. The player keeps showing `[A, B, C]` until `[B, D]` is fully safe. Interrupted downloads don't pollute the cache, and switching schedules is clean.  
+
+## Why this matters
+
+- No half states — the player only uses files marked `Downloaded`.  
+- Atomic schedule switches — a new schedule becomes active only when all its required files are ready.  
+- Resilience — interrupted downloads get cancelled or retried without breaking the current playback.  
+- Predictability — every file has a clear lifecycle, making it easy to debug.  
