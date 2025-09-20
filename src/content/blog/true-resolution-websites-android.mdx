@@ -1,0 +1,62 @@
+---
+title: Rendering websites at true resolution on Android and Android TV  
+date: 2025-09-20  
+---
+When you open a website in a browser on Android, you quickly discover that devices never agree on what "one pixel" means. Phones, tablets, and TVs all apply density scaling that translates physical pixels into "density-independent pixels" (dp). This is supposed to keep sites readable across different screens, but it also makes pixel-perfect rendering nearly impossible.
+
+For everyday browsing this abstraction is fine. Text stays legible and layouts adapt. But for cases where precision matters — like digital signage, fullscreen experiences, or sites designed for fixed resolutions — Android's scaling system gets in the way. You might design a layout that is exactly 1920x1080, but the browser will reinterpret it based on reported DPI.
+
+## How Android browser scaling works
+
+Browsers on Android rely on the same density system as apps. One dp is defined as one pixel on a 160 DPI screen. Higher density screens scale that baseline up.
+
+- A 320 DPI device maps 1 dp to 2 physical pixels  
+- A 480 DPI device maps 1 dp to 3 physical pixels  
+
+This helps text and controls remain readable, but it also means your 1920 px wide site might render at 1280 dp or 960 dp depending on the device. The browser is not actually showing you a 1:1 pixel mapping.
+
+On Android TV the mismatch becomes obvious. A television might report itself as xxhdpi even though its panel is standard 1080p or UHD. The browser follows that report, and suddenly the site looks zoomed or undersized.
+
+## The viewport trick
+
+Websites can bypass this by setting a custom viewport width. Instead of letting the browser guess, you declare how many CSS pixels should map to the physical width of the display.
+
+For example:
+
+```html
+<meta name="viewport" content="width=1920, user-scalable=no">
+```
+
+On a 1080p TV this forces the CSS grid to align with the true pixel grid. A 1920x1080 element will exactly fill the screen, no matter what DPI the device claims.
+
+For a UHD panel:
+
+```html
+<meta name="viewport" content="width=3840, user-scalable=no">
+```
+
+Now the site can render pixel-perfect at native resolution. No density scaling, no surprises.
+
+## Why this matters
+
+Pixel accuracy is not critical for most sites, but it is important in specific scenarios:
+
+- Digital signage where assets are created for exact 1080p or UHD layouts  
+- Fullscreen web apps or games that depend on 1:1 rendering  
+
+Relying on Android's default density scaling can lead to soft edges, slightly blurry graphics, or layouts that feel inconsistent compared to the original design.
+
+## Caveats and trade-offs
+
+Overriding the viewport width is powerful, but it comes with trade-offs.
+
+- Text scaling may not respect user accessibility preferences.  
+- On small handheld devices a fixed large viewport can make pages unreadable.  
+
+This method works best when you control the environment. For general-purpose websites it can hurt usability.
+
+## Closing thoughts
+
+Android's density system makes the web easier to read across wildly different screens, but it also prevents true 1:1 rendering. By setting a custom viewport width you take back control, forcing the browser to map CSS pixels directly to physical pixels.  
+
+Sometimes you do not want Android to scale or reinterpret your design. Sometimes you just want your website to render exactly as you built it.
