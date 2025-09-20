@@ -13,6 +13,10 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
+	server: {
+		host: true,
+		port: 4321,
+	},
 	integrations: [sitemap(), mdx({
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [rehypeKatex],
