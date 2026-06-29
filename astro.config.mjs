@@ -17,8 +17,9 @@ export default defineConfig({
 		host: true,
 		port: 4321,
 	},
-	integrations: [sitemap(), mdx({
+	markdown: {
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [rehypeKatex],
-	}), react()],
+	},
+	integrations: [sitemap(), mdx(), react()],
 })
