@@ -59,6 +59,10 @@ html.dark {
     li {
         @apply text-lg mb-4 ml-5 leading-relaxed text-neutral-800 dark:text-neutral-300;
     }
+
+    code:not(pre code) {
+        @apply px-1.5 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-[0.875em] font-mono;
+    }
 }
 
 .astro-code {
