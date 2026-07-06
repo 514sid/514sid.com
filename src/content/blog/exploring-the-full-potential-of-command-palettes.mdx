@@ -1,0 +1,76 @@
+---
+title: Exploring the full potential of command palettes
+date: 2026-07-06
+---
+
+Most apps end up with a pile of UI surfaces that all do the same job: collect a decision from the user. A command palette for search. A modal for deleting things. Another modal for creating things. Another for editing.
+
+None of them agree on how to do it.
+
+Each one has its own keyboard handling. Does `Esc` close it? Does it trap focus? Does `Enter` submit? Each has its own loading states, its own error states, its own visual language. They were built at different times, often by different people, and they drift apart.
+
+The user feels this as inconsistency. Search is slick and keyboard-first. Then you hit `Delete` and you're dropped into a completely different interaction model.
+
+## One surface for everything
+
+Here is the idea: what if there's only one surface, and everything is just a view pushed onto the same stack?
+
+Searching, navigating, creating, confirming, editing. All of it.
+
+Concretely, the `Delete` button on a page no longer opens its own dedicated modal. It opens the palette, showing a confirm view. The same palette that handles `Cmd+K` search. The confirm dialog isn't a different piece of UI that happens to look similar. It's the same surface, the same keyboard model, the same shell, showing a different kind of view.
+
+This also means the same view is reachable two ways for free. Click the button on the entity's page, or search for it: "Delete screen", pick the screen, land in the same confirm view. One definition, two entry points, and they can never drift out of sync, because there's only one of them.
+
+The whole model needs only a small vocabulary of view types. A launcher view for search. A list view for results and pickers. A confirm view for binary decisions. A form view for creating, renaming, inviting. That's enough to cover almost every decision an app ever asks the user to make, without a single bespoke modal.
+
+Every view lives on the same navigable stack. Open a form, and `Esc` takes you exactly one step back, the same way it would out of a search result. There is no context switch between "the palette" and "the modal that opened on top of it". It's one continuous place.
+
+## The details that make it feel like one thing
+
+Putting a form inside a palette-shaped box is not the interesting part. The interesting part is a set of behaviors that apply to every view, so nothing feels bolted on.
+
+One keyboard model everywhere. Arrows move selection, `Enter` activates, `Esc` goes back, whether you're browsing search results or sitting on a delete confirmation with Cancel focused by default. The safer default for a destructive action.
+
+Results are views too. A small action, like copying an ID or renaming something, shows a transient toast inside the palette and leaves you exactly where you were, free to act again immediately. An important outcome, like completing a subscription upgrade, gets a real success view that stays on screen until you dismiss it. The weight of the confirmation matches the weight of the action. I first tried routing every action through a blocking "click OK to continue" screen, and it was the wrong call: for most actions the outcome isn't the end of the interaction, just a quick confirmation you should be able to act straight past.
+
+The surface freezes while an action runs, and shows what's running. The item that's in flight gets an inline spinner and a label like "Switching to another workspace". Everything else dims and stops responding, so you can't double-fire the same action.
+
+Alternatives are first-class. "Archive instead of delete" isn't a text link tacked onto the confirm dialog. It opens its own real confirm view, exactly as substantial as the destructive path it sits next to.
+
+None of these ideas are complicated on their own. What's different is that they're defined once, for the whole surface, and every kind of view gets them for free. Bespoke modals re-solve these problems every time, or forget to.
+
+## Is this new?
+
+Confirming before a destructive action is obviously not new. What seems less common is where it lives.
+
+Every command palette I've seen treats itself as a launcher and nothing more. Type, filter, pick, hand off. Anything past navigation happens in a separate part of the app with its own UI.
+
+Some products do embed confirmation or creation steps inside their own `Cmd+K`. But those are one-off flows built for that specific app. The idea I'm arguing for is more structural: treat confirm, create, and edit as first-class view types of the palette itself, governed by the same rules as search. Not a modal that happens to open from the palette, but the palette being the place where decisions happen.
+
+## What this gives a web app
+
+The first payoff is the shortest path to your goal.
+
+In a typical web app, the path to any action is: navigate to a page, wait for it to load, find the right button, open a modal, wait for that, fill it in, close it, navigate back. Every step is something the user has to survive before their actual goal is done.
+
+A universal palette collapses all of that into: open palette, type, arrow, Enter, done. And you're still exactly where you started. The location of the thing you're acting on stops mattering. You don't go to the screen to delete it. You just delete it.
+
+That's also why stopping at search sells the pattern short. A palette that only navigates still ends every interaction with "and now you're on a page, go find the button". A palette that owns the whole action is the shortest path between "I know what I want to do" and "it's done".
+
+The second payoff is speed.
+
+Fewer steps is one thing; each step is also just faster.
+
+A page is a destination. It carries everything a destination needs: layout, navigation, images, previews, data tables. Loading one is real work, and the user waits for all of it even when they came for a single button.
+
+A palette view carries almost nothing. It's text. A few rows, a title, maybe a small preview card. There are no heavy assets to fetch, no layout to rebuild, no route change to run. Moving between views feels instant because there's barely anything to render.
+
+The data side is just as small. A confirm view needs the name of the thing and nothing else. A form needs a handful of fields. Even when an action has to touch the network, it needs a fraction of what a full page needs.
+
+So the speed isn't an optimization you add later. It falls out of the shape of the surface. Pages are heavy because they show everything. Palette views are fast because they show only the decision.
+
+## Beyond the theory
+
+The pitch fits in one sentence. Your delete button and your `Cmd+K` should be the same surface, and once they are, everything else about your app's actions gets consistent for free.
+
+And it's not just a pitch. I've been prototyping this on a model of a digital signage product, with screens, media assets, and workspaces, to make sure it holds up on more than a toy todo list. So far it does.
