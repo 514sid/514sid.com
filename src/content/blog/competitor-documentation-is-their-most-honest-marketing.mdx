@@ -1,0 +1,94 @@
+---
+title: Your competitor's documentation is their most honest marketing
+date: 2026-07-20
+---
+
+When product managers research competitors, they start with the marketing site, book a demo, and come back with notes that could have been written by the competitor's own marketing team.
+
+That is the least useful way to do it. Marketing pages are written to persuade; every sentence is the best possible framing, with everything inconvenient left out.
+
+Documentation is written for people who already paid. There is no reason to oversell in the docs and every reason not to, because a misleading article turns into a support ticket, and support tickets cost money.
+
+Docs are the one public place where a company has to tell the truth about how its product works. That makes them the best competitive research material you can get without talking to a customer or touching the product.
+
+## The same product, told twice
+
+The core technique: take a claim from the marketing site and find the same feature in the docs. The distance between the two versions is where the useful information lives. My examples are from digital signage, the industry I know, but the technique works anywhere.
+
+Every digital signage CMS claims "flexible scheduling", one identical sentence and a screenshot across fifty competitors. Open the same vendor's scheduling articles and ten minutes later you know exactly where the flexibility ends, because the people who wrote them were preventing support tickets, not selling.
+
+The same exercise works on every claim.
+
+"Works offline" becomes what gets cached, what happens to offline changes, and which features quietly stop working.
+
+"Works on any screen" becomes a compatibility matrix with footnotes and a Tizen app that does less than the Windows one.
+
+"Enterprise-ready" becomes what SSO actually covers and which roles the permission system really has.
+
+The marketing page states the ambition. The docs state the implementation.
+
+## Where the docs give away the weak spots
+
+The troubleshooting section is the most revealing of all, a ranked list of the ways the product fails. "Sync stuck and not completing" is a summary of a thousand support conversations.
+
+Community forums extend it further, giving you friction in the customer's own words, plus how long the vendor took to respond and whether the answer was a fix or a workaround.
+
+Workarounds deserve special attention, because a documented workaround is the most information-dense thing a vendor can publish. It says three things at once: users want this, the team knows it, and the team could not or would not build it properly. That is a roadmap gap written down by the people who know it best.
+
+Its cousin, "contact support to enable this", usually means the feature is fragile or unfinished enough that customers cannot be trusted with it unsupervised.
+
+## Who the product is really for
+
+A vendor can claim any audience on the homepage, and most claim all of them. The docs show which audience they actually invest in serving.
+
+Look at the vocabulary. Do examples feature a small cafe with a couple of screens or an IT admin rolling out thousands across a franchise? Does the setup guide assume you know what a static IP and a VLAN are, or explain how to connect the HDMI cable to the player and the display?
+
+Look at where plan gates appear. If everything interesting says "available on Enterprise", the lower tiers are lead generation, not products, whatever the pricing page implies.
+
+## Changelogs add the time dimension
+
+Everything above is a snapshot. Release notes turn it into a trend line. Read a year of a competitor's changelog in one sitting, an hour that beats any analyst report. Bets show up as clusters of related releases. You see real shipping velocity, and which parts of the product have quietly stopped receiving updates, which is how products announce retreat without a press release. Deprecations tell you what they gave up on. A release full of bug fixes for last quarter's flagship feature tells you how the launch actually went.
+
+The docs change over time too. When articles quietly disappear, the feature is on its way out long before any deprecation notice. When an article keeps growing warnings and edge-case notes, the feature under it is unstable or confusing, a UX problem the product team has not fixed. Diff a competitor's docs against last year's and you get a roadmap no press release will give you.
+
+Cross-referencing makes it sharper. A limitation that has sat in the docs for three years, with a workaround article and a forum thread full of requests, is not something they have not noticed. It is something they have decided not to fix. That decision is your opening.
+
+## When the RFP was basically written by your competitor
+
+There is one situation where this research pays for itself in a single deal: the RFP from a switching customer. They always require that the new product do everything the old one did, and they rarely describe it in neutral terms. They describe what they have in the vocabulary of the vendor they are leaving, often copied straight from its materials.
+
+This is where inflated feature descriptions do real damage. A vendor can describe one simple capability from several angles until it fills fifteen RFP lines, each sounding like a separate, sophisticated feature. Open the competitor's docs and all fifteen collapse into one settings screen with a couple of dropdowns. Sometimes it is worse: a raw, limitation-wrapped capability the customer probably tried once and abandoned. The fifteen requirements were never fifteen features. They were one feature, marketed fifteen ways.
+
+Respond literally and you lose either way: "partially supported" against requirements that describe nothing real, or a scramble toward parity with a feature that may not even be good. The stronger move is to trace the requirements back to what the customer actually needs and show how you handle that, which you can only do if you know what sits behind the language. When your response says "these fifteen requirements describe a single feature in your current product, here are its documented limitations, and here is how we cover the same need", the evaluation shifts from feature counting to problem solving.
+
+## What this gives your sales team
+
+The default battlecard, "we're more reliable", "our platform is easier", earns nothing, because every vendor says it, and it puts your salesperson in the weak position of asking to be believed.
+
+Docs research replaces belief with verification. Instead of saying "we handle scheduling better", the salesperson can point to a fact: "their own documentation states a scheduled change takes up to ten minutes to reach a screen; ours takes one to two seconds; here is the article". The prospect can check the claim, and when it holds, your next ten claims get the benefit of the doubt. Accuracy compounds.
+
+It also produces discovery questions, which are more powerful than claims. "Ask them how rollout works past a thousand screens" is only a good question when you already know their docs describe a manual provisioning step per device. The prospect feels smarter, not sold to, and the competitor's own documentation delivers the blow.
+
+Two rules keep this honest. Cite only what is public and current, and re-verify every quarter, because nothing burns credibility like quoting a limitation fixed six months ago. And never dress it up as mudslinging. The tone is "here is a factual difference and why it matters for your use case". Precision is what separates competitive positioning from trash talk, and docs are where precision comes from.
+
+## Checkbox features tell you what the market asked for
+
+Some features exist because the team believed in them, others because a big prospect asked, sales needed the box checked, and something shipped just deep enough to win the deal. The docs tell you which is which. A believed-in feature has thorough guides and visible iteration in the changelog. A checkbox feature has one thin article and a list of limitations.
+
+The extreme case is a feature on the marketing site that the docs barely mention at all. It either just shipped, has no users, or is thin enough that the vendor would rather not write it up. All three are worth knowing.
+
+For a smaller company this is close to a gift. You cannot outspend a large competitor, and you do not need to. When a capability everyone lists turns out to be shallow, you know exactly where to compete: build the same thing properly. Their advantage was never that feature; it was distribution and trust, and a paper feature defends neither.
+
+The checkbox feature carries a second, more valuable message: somebody asked for it. A feature the team bet on itself tends to ship with conviction and grow over time. One that arrives thin and wrapped in limitations is usually a reaction to outside pressure, a request answered with the minimum. So it is a preserved customer request, and the underlying need is probably still unmet.
+
+Read several competitors' docs this way and you get a map of what buyers keep asking for, assembled without a single interview. You are reading years of accumulated customer demand, recorded by the vendors who had to respond to it.
+
+Whether any of it belongs on your roadmap is a separate question.
+
+## This is not about copying
+
+I have written before that copying competitor features is not a strategy, and none of this contradicts that. Reading docs to replicate a feature list is the same mistake with extra steps: you can see what they built, but not why, and not whether it works.
+
+The point is the opposite. You are not looking for what to build. You are looking for where their product creates friction, which constraints they accepted, which workarounds their customers live with, and which segments they quietly stopped serving. Those are the places where a different vision can win, and they are invisible on the marketing site by design.
+
+Their marketing tells you what they want to be. Their documentation tells you what they are. The gap between the two is where your competitive advantage lives, and it is publicly available to anyone willing to read.
